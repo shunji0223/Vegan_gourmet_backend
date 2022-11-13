@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="TimerPush\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TimerPush\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Vegan_Gourmet_Backend_Domains\Vegan_Gourmet_Backend_Domains.csproj" />
+  </ItemGroup>
+</Project>
