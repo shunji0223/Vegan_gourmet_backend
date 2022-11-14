@@ -11,9 +11,25 @@ namespace Vegan_Gourmet_Backend
         => _timerPushNotificationUseCase = timerPushNotificationUseCase;
 
         [Function("DinnerTimePushNotificationHandler")]
-        public async Task Run([TimerTrigger("%DinnerTime%")] Timer _)
+        public async Task Run([TimerTrigger("%DinnerTime%")] MyInfo timer)
         {
             await _timerPushNotificationUseCase.ExecuteAsync();
+        }
+
+        public class MyInfo
+        {
+            public MyScheduleStatus ScheduleStatus { get; set; }
+
+            public bool IsPastDue { get; set; }
+        }
+
+        public class MyScheduleStatus
+        {
+            public DateTime Last { get; set; }
+
+            public DateTime Next { get; set; }
+
+            public DateTime LastUpdated { get; set; }
         }
     }
 }
