@@ -38,7 +38,8 @@ public class FirebasePushNotification : IFirebasePushNotification
             {
                 Aps = new Aps()
                 {
-                    Badge = 1
+                    Badge = 1,
+                    Sound = "default"
                 }
             }
         };
