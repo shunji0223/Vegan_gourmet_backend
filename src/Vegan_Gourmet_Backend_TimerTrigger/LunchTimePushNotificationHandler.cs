@@ -1,21 +1,35 @@
 ﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
 using Vegan_Gourmet_Backend_UseCases.TimerPush;
 
-namespace Vegan_Gourmet_Backend
+namespace Vegan_Gourmet_Backend;
+
+public class LunchTimePushNotificationHandler
 {
-    public class LunchTimePushNotificationHandler
+    private readonly ITimerPushNotificationUseCase _timerPushNotificationUseCase;
+
+    public LunchTimePushNotificationHandler(ITimerPushNotificationUseCase timerPushNotificationUseCase)
+    => _timerPushNotificationUseCase = timerPushNotificationUseCase;
+
+    [Function("LunchTimePushNotificationHandler")]
+    public async Task Run([TimerTrigger("%LunchTime%")] MyInfo timer)
     {
-        private readonly ITimerPushNotificationUseCase _timerPushNotificationUseCase;
+        await _timerPushNotificationUseCase.ExecuteAsync();
+    }
 
-        public LunchTimePushNotificationHandler(ITimerPushNotificationUseCase timerPushNotificationUseCase)
-        => _timerPushNotificationUseCase = timerPushNotificationUseCase;
+    public class MyInfo
+    {
+        public MyScheduleStatus ScheduleStatus { get; set; }
 
-        [Function("LunchTimePushNotificationHandler")]
-        public async Task Run([Microsoft.Azure.Functions.Worker.TimerTrigger("%LunchTime%")] TimerInfo timer)
-        {
-            await _timerPushNotificationUseCase.ExecuteAsync();
-        }
+        public bool IsPastDue { get; set; }
+    }
+
+    public class MyScheduleStatus
+    {
+        public DateTime Last { get; set; }
+
+        public DateTime Next { get; set; }
+
+        public DateTime LastUpdated { get; set; }
     }
 }
 
